@@ -1,4 +1,23 @@
 <?php
+require_once(__DIR__ . "/./constantes.php");
+require_once(__DIR__ . "/../Handlers/SQL_CRUD.php");
+
+use Handlers\SQL_CRUD;
+
+function retornaDBHandler(){
+  $db_handler = new SQL_CRUD(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+
+  return $db_handler;
+}
+
+function verificarSeTabelaExiste($nome_tabela){
+  $db_handler = retornaDBHandler();
+
+  $busca = $db_handler->executeSQL("SHOW TABLES LIKE ?", $nome_tabela);
+
+  return (bool)$busca->rowCount();
+}
+
 function converteEmArrayAssociativo($array){
   $new_array = [];
 
