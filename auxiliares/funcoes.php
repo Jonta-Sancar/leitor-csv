@@ -67,6 +67,8 @@ function cadastraRelacaoPerguntas($tabela, $av_perguntas){
         return false;
       }
     }
+
+    return $resultado_insert;
   } else {
     return false;
   }
