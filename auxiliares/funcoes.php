@@ -40,6 +40,9 @@ function criarTabela($tabela, $colunas){
         break;
       }
     }
+    return $resultado;
+  } else {
+    return false;
   }
 }
 
@@ -63,7 +66,6 @@ function cadastraRelacaoPerguntas($tabela, $av_perguntas){
         break;
         return false;
       }
-  
     }
   } else {
     return false;
