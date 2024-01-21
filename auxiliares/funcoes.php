@@ -31,18 +31,17 @@ function criarTabela($tabela, $colunas){
   
   if($resultado){
     foreach($colunas as $coluna){
-      $SQL = "ALTER TABLE `$tabela` ADD COLUMN `$coluna` VARCHAR(500) NOT NULL;";
-
+      $SQL = "ALTER TABLE `$tabela` ADD COLUMN `$coluna` TEXT NOT NULL;";
       $resultado = $db_handler->executeSQL($SQL);
 
-      if($resultado === false){
-        return false;
+      if($resultado == false){
         break;
+        return false;
       }
     }
     return $resultado;
   } else {
-    return false;
+    return "else";
   }
 }
 
@@ -72,6 +71,26 @@ function cadastraRelacaoPerguntas($tabela, $av_perguntas){
   } else {
     return false;
   }
+}
+
+function cadastrarRespostas($tabela, $av_respostas){
+  $db_handler = retornaDBHandler();
+
+  foreach($av_respostas as $k => $v){
+    $dados_insert = [
+      "quem_respondeu" => $k,
+      ...$av_respostas[$k]
+    ];
+
+    $resultado_insert = $db_handler->execInsert($tabela, $dados_insert);
+
+    if($resultado_insert === false){
+      break;
+      return false;
+    }
+  }
+
+  return $resultado_insert;
 }
 
 function converteEmArrayAssociativo($array){
