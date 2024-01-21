@@ -18,6 +18,58 @@ function verificarSeTabelaExiste($nome_tabela){
   return (bool)$busca->rowCount();
 }
 
+function criarTabela($tabela, $colunas){
+  $SQL = "CREATE TABLE `$tabela` (
+    `id` INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    `quem_respondeu` VARCHAR(200) NOT NULL
+    );
+  ";
+
+  $db_handler = retornaDBHandler();
+
+  $resultado = $db_handler->executeSQL($SQL);
+  
+  if($resultado){
+    foreach($colunas as $coluna){
+      $SQL = "ALTER TABLE `$tabela` ADD COLUMN `$coluna` VARCHAR(500) NOT NULL;";
+
+      $resultado = $db_handler->executeSQL($SQL);
+
+      if($resultado === false){
+        return false;
+        break;
+      }
+    }
+  }
+}
+
+function cadastraRelacaoPerguntas($tabela, $av_perguntas){
+  $db_handler = retornaDBHandler();
+
+  $resultado_delete = $db_handler->execDelete("relaciona_perguntas_a_tabela_de_respostas", [["tabela", $tabela]]);
+
+  if($resultado_delete){
+    foreach($av_perguntas as $k => $v){
+      $dados_insert = [
+        "tabela" => $tabela,
+        "identificador_pergunta" => $k,
+        "texto_pergunta" => $v
+      ];
+  
+    
+      $resultado_insert = $db_handler->execInsert("relaciona_perguntas_a_tabela_de_respostas", $dados_insert);
+  
+      if($resultado_insert === false){
+        break;
+        return false;
+      }
+  
+    }
+  } else {
+    return false;
+  }
+}
+
 function converteEmArrayAssociativo($array){
   $new_array = [];
 
@@ -28,7 +80,7 @@ function converteEmArrayAssociativo($array){
       $numero_pergunta = "0" . $numero_pergunta;
     }
 
-    $new_array["Pergunta $numero_pergunta"] = $value;
+    $new_array["pergunta_$numero_pergunta"] = $value;
   }
 
   return $new_array;
