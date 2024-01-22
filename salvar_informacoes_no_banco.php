@@ -1,5 +1,6 @@
 <?php
-require_once(__DIR__ . "/./auxiliares/funcoes.php");
+require_once(__DIR__ . "/./auxiliares/funcoes_gerais.php");
+require_once(__DIR__ . "/./auxiliares/funcoes_interacao_com_banco.php");
 
 $diretorio_arquivos = __DIR__ . DIRECTORY_SEPARATOR . "." . DIRECTORY_SEPARATOR . "avaliacoes" . DIRECTORY_SEPARATOR;
 $arquivos = glob($diretorio_arquivos . "*.csv");
@@ -63,6 +64,7 @@ $todas_av = array_merge(retornaAvaliacoesUltimosTrintaDias(), $arquivos_lidos);
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>Salvamento de Respostas no Banco de Dados</title>
 </head>
 <body>
@@ -71,7 +73,7 @@ $todas_av = array_merge(retornaAvaliacoesUltimosTrintaDias(), $arquivos_lidos);
     <?php
       foreach($todas_av as $nome_arquivo){
         ?>
-          <li><?= $nome_arquivo ?></li>
+          <li><a href="opcoes_avaliacao.php?av=<?= $nome_arquivo ?>"><?= $nome_arquivo ?></a></li>
         <?php
       }
     ?>
