@@ -1,5 +1,5 @@
 <?php
-  require_once(__DIR__ . "/./constantes.php");
+  require_once(__DIR__ . "/../auxiliares/constantes.php");
   include_once(__DIR__ ."/../Handlers/SQL_CRUD.php");
 
   use Handlers\SQL_CRUD;
@@ -7,24 +7,23 @@
   $db_handler = new SQL_CRUD(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 
   if(!empty($_POST)){
-
-    $av = '';
-    $INFO = [];
-    foreach ($_POST as $key => $value) {
-      $dado = filter_input(INPUT_POST, $key);
-
-      if($key == "tabela"){
-        $av = $dado;
-      } else {
-        $INFO[ $key ] = $dado;
-      }
-    }
+    $av = $_POST['tabela'];
+    unset($_POST['tabela']);
     
-    if(!empty($av) && !empty($INFO)){
-      foreach ($INFO as $key => $value) {
-        $resultado = $db_handler->execUpdate;
+    if(!empty($av) && !empty($_POST)){
+      foreach ($_POST as $key => $value) {
+        $resultado = $db_handler->execUpdate("relaciona_perguntas_a_tabela_de_respostas", ["pontuacao_pergunta" => $value], [["tabela", $av], ["id", $key]]);
+
+        if($resultado === false){
+          break;
+          header("Location: ../opcoes_avaliacao.php?av=". $av ."&msg=fail");
+        }
+      }
+
+      if($resultado !== false){
+        header("Location: ../opcoes_avaliacao.php?av=". $av ."&msg=success");
       }
     } else {
-      header("Location: ../opcoes_avaliacao.php?msg=fail");
+      header("Location: ../opcoes_avaliacao.php?av=". $av ."&msg=fail");
     }
   }
