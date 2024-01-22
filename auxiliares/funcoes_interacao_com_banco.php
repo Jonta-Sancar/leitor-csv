@@ -22,8 +22,50 @@ function retornaAvaliacoesUltimosTrintaDias(){
   $resposta = array_map(function($v){
     return $v['tabela'];
   }, $resultado);
+
+  if(!is_array($resposta)){
+    $resposta = [];
+  }
   
   return $resposta;
+}
+
+function retornaPerguntasAvaliacaoSemPontos($av){
+  $db_handler = retornaDBHandler();
+
+  $resultado = $db_handler->execSelect("relaciona_perguntas_a_tabela_de_respostas", null, [["tabela", $av], " pontuacao_pergunta IS NULL "])['RESULT'];
+  
+  return (bool)count($resultado);
+}
+
+function retornaPerguntasAvaliacao($av){
+  $db_handler = retornaDBHandler();
+
+  $resultado = $db_handler->execSelect("relaciona_perguntas_a_tabela_de_respostas", null, [["tabela", $av]])['RESULT'];
+  
+  return $resultado;
+}
+
+function retornaQuemRespondeu($av){
+  $db_handler = retornaDBHandler();
+
+  $resultado = $db_handler->execSelect($av, "quem_respondeu", null, "quem_respondeu")['RESULT'];
+  
+  return $resultado;
+}
+
+function retornaRespostasAvaliacao($av, $quem_respondeu){
+  $db_handler = retornaDBHandler();
+
+  if(!empty($quem_respondeu)){
+    $condicoes = [["quem_respondeu", $quem_respondeu]];
+  } else {
+    $condicoes = null;
+  }
+
+  $resultado = $db_handler->execSelect($av, null, $condicoes)['RESULT'];
+  
+  return $resultado;
 }
 
 function verificarSeTabelaExiste($nome_tabela){
