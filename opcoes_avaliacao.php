@@ -66,7 +66,7 @@
 
     if ($perguntas_av_sem_pontos || $editar_pontos == 'true'){
       ?>
-        <form action="/post/aplicar_pontos_as_questoes.php" method="post">
+        <form action="post/aplicar_pontos_as_questoes.php" method="post">
           <input type="hidden" name="tabela" value="<?= $av ?>">
 
           <?php
@@ -91,7 +91,7 @@
       $respostas = retornaRespostasAvaliacao($av, $corrigir_respostas);
 
       ?>
-        <form action="/post/aplicar_correcao.php" method="post">
+        <form action="post/aplicar_correcao.php" method="post">
           <input type="hidden" name="tabela" value="<?= $av ?>">
           <input type="hidden" name="quem_respondeu" value="<?= $corrigir_respostas ?>">
 
