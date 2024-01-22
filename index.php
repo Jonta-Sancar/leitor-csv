@@ -1,3 +1,6 @@
+<?php
+  $existe_pendencia = (bool)glob(__DIR__ . DIRECTORY_SEPARATOR . "avaliacoes/*.csv");
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -21,15 +24,22 @@
   <div class="container">
     <h1>Gestão de Avaliações</h1>
     <form action="post/salvar_arquivos_csv.php" method="post" enctype="multipart/form-data">
-      <!-- <input type="hidden" name="tester" value="sim"> -->
       <div class="mb-3">
         <label for="envio-csv">Enviar Arquivos:</label>
         <input type="file" class="form-control" multiple name="envio-csv[]" id="envio-csv">
       </div>
       <div class="d-grid">
-        <input type="submit" class="btn btn-primary" value="Salvar Arquivos">
+        <input type="submit" class="btn btn-success" value="Salvar Arquivos">
       </div>
     </form>
+    <div class="row text-center mt-4">
+      <div class="col">
+        <a href="./salvar_informacoes_no_banco.php" class="btn btn-primary <?php if(!$existe_pendencia){echo "disabled";} ?>">Salvar Avaliações</a>
+      </div>
+      <div class="col">
+        <a href="./opcoes_avaliacao.php" class="btn btn-primary">Opções Para as Avaliações</a>
+      </div>
+    </div>
   </div>
 
   <?php include_once(__DIR__ . "/./modulos/footer.php") ?>
