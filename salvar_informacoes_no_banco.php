@@ -5,7 +5,7 @@ require_once(__DIR__ . "/./auxiliares/funcoes_interacao_com_banco.php");
 $diretorio_arquivos = __DIR__ . DIRECTORY_SEPARATOR . "." . DIRECTORY_SEPARATOR . "avaliacoes" . DIRECTORY_SEPARATOR;
 $arquivos = glob($diretorio_arquivos . "*.csv");
 
-$arquivos_lidos = [];
+$arquivos_lidos = retornaAvaliacoesUltimosTrintaDias();
 $tudo_certo = true;
 $messages = [];
 
@@ -56,8 +56,6 @@ foreach ($arquivos_lidos as $nome_arquivo) {
     }
   }
 }
-
-$todas_av = array_merge(retornaAvaliacoesUltimosTrintaDias(), $arquivos_lidos);
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -71,7 +69,7 @@ $todas_av = array_merge(retornaAvaliacoesUltimosTrintaDias(), $arquivos_lidos);
   <h3>Arquivos Lidos Nos últimos 30 dias</h3>
   <ul>
     <?php
-      foreach($todas_av as $nome_arquivo){
+      foreach($arquivos_lidos as $nome_arquivo){
         ?>
           <li><a href="opcoes_avaliacao.php?av=<?= $nome_arquivo ?>"><?= $nome_arquivo ?></a></li>
         <?php
