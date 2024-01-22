@@ -37,7 +37,7 @@
             foreach($perguntas_av as $pergunta_info){
               ?>
                 <div class="form-group">
-                  <input type="number" name="<?= $pergunta_info['identificador_pergunta'] ?>" id="<?= $pergunta_info['identificador_pergunta'] ?>" style="width:50px;">
+                  <input type="number" name="<?= $pergunta_info['id'] ?>" id="<?= $pergunta_info['identificador_pergunta'] ?>" style="width:50px;">
                   <label for="<?= $pergunta_info['identificador_pergunta'] ?>"><?= $pergunta_info['texto_pergunta'] ?></label>
                 </div>
               <?php
