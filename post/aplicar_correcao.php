@@ -35,8 +35,6 @@
             break;
         }
         
-        var_dump($existe_registro);
-        echo '<br>';
         if($existe_registro){
           $resultado = $db_handler->execUpdate("pontuacao_respostas", ["pontuacao_pergunta" => $valor_real], $condicoes);
         } else {
@@ -50,21 +48,17 @@
           $resultado = $db_handler->execInsert("pontuacao_respostas", $dados_insert);
         }
 
-        var_dump($resultado);
-        echo '<br>';
-        echo '<br>';
-
 
         if($resultado === false){
           break;
-          // header("Location: ../opcoes_avaliacao.php?av=". $av ."&msg=fail");
+          header("Location: ../opcoes_avaliacao.php?av=". $av ."&msg=fail");
         }
       }
 
       if($resultado !== false){
-        // header("Location: ../opcoes_avaliacao.php?av=". $av ."&msg=success");
+        header("Location: ../opcoes_avaliacao.php?av=". $av ."&msg=success");
       }
     } else {
-      // header("Location: ../opcoes_avaliacao.php?av=". $av ."&msg=fail");
+      header("Location: ../opcoes_avaliacao.php?av=". $av ."&msg=fail");
     }
   }
