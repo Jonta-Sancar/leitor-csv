@@ -1,6 +1,5 @@
 <?php
 require_once(__DIR__ . "/./auxiliares/funcoes.php");
-require_once(__DIR__ . "/./Handlers/SQL_CRUD.php");
 
 $diretorio_arquivos = __DIR__ . DIRECTORY_SEPARATOR . "." . DIRECTORY_SEPARATOR . "avaliacoes" . DIRECTORY_SEPARATOR;
 $arquivos = glob($diretorio_arquivos . "*.csv");
@@ -56,6 +55,8 @@ foreach ($arquivos_lidos as $nome_arquivo) {
     }
   }
 }
+
+$todas_av = array_merge(retornaAvaliacoesUltimosTrintaDias(), $arquivos_lidos);
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -65,10 +66,10 @@ foreach ($arquivos_lidos as $nome_arquivo) {
   <title>Salvamento de Respostas no Banco de Dados</title>
 </head>
 <body>
-  <h3>Arquivos Lidos</h3>
+  <h3>Arquivos Lidos Nos últimos 30 dias</h3>
   <ul>
     <?php
-      foreach($arquivos_lidos as $nome_arquivo){
+      foreach($todas_av as $nome_arquivo){
         ?>
           <li><?= $nome_arquivo ?></li>
         <?php
