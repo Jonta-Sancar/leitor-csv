@@ -10,6 +10,22 @@ function retornaDBHandler(){
   return $db_handler;
 }
 
+function retornaAvaliacoesUltimosTrintaDias(){
+  $db_handler = retornaDBHandler();
+
+  $data_hoje = date("Y-m-d");
+  $data_amanha = date("Y-m-d", strtotime("+1 day", strtotime($data_hoje)));
+  $data_um_mes_atras = date("Y-m-d", strtotime("-30 days", strtotime($data_hoje)));
+
+  $resultado = $db_handler->execSelect("relaciona_perguntas_a_tabela_de_respostas", "tabela", ["CAST(data_cadastro as date) BETWEEN '$data_um_mes_atras' AND '$data_amanha'"], 'tabela')['RESULT'];
+
+  $resposta = array_map(function($v){
+    return $v['tabela'];
+  }, $resultado);
+  
+  return $resposta;
+}
+
 function verificarSeTabelaExiste($nome_tabela){
   $db_handler = retornaDBHandler();
 
