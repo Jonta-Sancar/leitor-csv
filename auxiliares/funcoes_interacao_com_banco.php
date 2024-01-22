@@ -38,10 +38,15 @@ function retornaPerguntasAvaliacaoSemPontos($av){
   return (bool)count($resultado);
 }
 
-function retornaPerguntasAvaliacao($av){
+function retornaPerguntasAvaliacao($av, $identificador_pergunta = null){
   $db_handler = retornaDBHandler();
 
-  $resultado = $db_handler->execSelect("relaciona_perguntas_a_tabela_de_respostas", null, [["tabela", $av]])['RESULT'];
+  $condicoes = [["tabela", $av]];
+  if(!empty($identificador_pergunta)){
+    array_push($condicoes, ["identificador_pergunta", $identificador_pergunta]);
+  }
+
+  $resultado = $db_handler->execSelect("relaciona_perguntas_a_tabela_de_respostas", null, $condicoes)['RESULT'];
   
   return $resultado;
 }
@@ -65,6 +70,20 @@ function retornaRespostasAvaliacao($av, $quem_respondeu){
 
   $resultado = $db_handler->execSelect($av, null, $condicoes)['RESULT'];
   
+  return $resultado;
+}
+
+function retornaCorrecaoPergunta($av, $quem_respondeu, $identificador_pergunta){
+  $db_handler = retornaDBHandler();
+
+  $condicoes = [
+    ['tabela', $av],
+    ['email', $quem_respondeu],
+    ['identificador_pergunta', $identificador_pergunta],
+  ];
+
+  $resultado = $db_handler->execSelect("pontuacao_respostas", null, $condicoes)['RESULT'];
+
   return $resultado;
 }
 
