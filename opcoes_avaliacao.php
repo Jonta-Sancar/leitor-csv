@@ -30,8 +30,8 @@
 
     if ($perguntas_av_sem_pontos){
       ?>
-        <form action="/post/aplicar_pontos_as_questoes.php">
-          <input type="hidden" name="<?= $av ?>">
+        <form action="/post/aplicar_pontos_as_questoes.php" method="post">
+          <input type="hidden" name="tabela" value="<?= $av ?>">
 
           <?php
             foreach($perguntas_av as $pergunta_info){
