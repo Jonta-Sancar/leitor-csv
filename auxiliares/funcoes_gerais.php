@@ -33,7 +33,7 @@ function CDVParaArray($arquivo_csv_aberto){
       $dados_removidos = array_splice($data, 0, 2);
       $new_data = converteEmArrayAssociativo($data);
   
-      $email = $dados_removidos[1];
+      $email = @$dados_removidos[1];
       
       if($row == 1){
         $array_perguntas = $new_data;
