@@ -60,8 +60,7 @@ foreach ($arquivos_lidos as $nome_arquivo) {
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <?php include_once(__DIR__ . "/./modulos/head.php") ?>
 
   <title>Salvamento de Respostas no Banco de Dados</title>
 </head>
@@ -90,5 +89,6 @@ foreach ($arquivos_lidos as $nome_arquivo) {
       }
     }
   ?>
+  <?php include_once(__DIR__ . "/./modulos/footer.php") ?>
 </body>
 </html>
