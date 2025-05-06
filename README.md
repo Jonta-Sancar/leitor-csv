@@ -1,5 +1,5 @@
 # LEITOR - CSV
- Feito para ler avaliações da COUDE.
+ Feito para ler avaliações.
 
 ### passos:
 - analisar o modelo do banco de dados utilizado (estabelecê-lo em tua máquina), no arquivo `leitor-csv/banco_referencia.sql`;
